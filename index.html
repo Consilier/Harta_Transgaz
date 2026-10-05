@@ -184,10 +184,21 @@ select.tool{font:500 11.5px/1 var(--ui);border:1px solid var(--line);border-radi
 #drawhead .n{flex:1;font-family:var(--mono);font-size:10px;color:var(--muted)}
 #drawhead button{border:1px solid var(--line);background:#fff;border-radius:2px;
   cursor:pointer;width:20px;height:20px;padding:0;line-height:1}
-#drawlist{overflow-y:auto;flex:1;max-height:260px}
+#drawpalette{display:flex;gap:5px;align-items:center;padding:8px 12px;
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+#drawpalette .sw{width:18px;height:18px;border-radius:50%;cursor:pointer;
+  border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
+#drawpalette .sw.on{box-shadow:0 0 0 2px var(--accent)}
+#drawpalette input[type=color]{width:24px;height:20px;padding:0;border:1px solid var(--line);
+  background:none;cursor:pointer;border-radius:2px}
+#drawtools button:disabled{opacity:.4;cursor:default;border-color:var(--line);color:var(--muted)}
+#drawlist{overflow-y:auto;flex:1;max-height:240px}
 .drawrow{padding:7px 12px;border-bottom:1px solid #f1f4f7;cursor:pointer;
   display:flex;gap:8px;align-items:baseline}
 .drawrow:hover{background:#f1f4f7}
+.drawrow.sel{background:#e2edf6}
+.drawrow .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;
+  box-shadow:0 0 0 1px rgba(0,0,0,.2)}
 .drawrow .dk{font-family:var(--mono);font-size:9px;color:#b4472f;text-transform:uppercase;
   letter-spacing:.06em;flex:0 0 auto}
 .drawrow .dn{flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -376,8 +387,10 @@ select.tool{font:500 11.5px/1 var(--ui);border:1px solid var(--line);border-radi
     <h2>Desen</h2><span class="n" id="drawcount"></span>
     <button id="drawhide" title="Ascunde panoul">×</button>
   </div>
+  <div id="drawpalette"></div>
   <div id="drawlist"></div>
   <div id="drawtools">
+    <button id="drawundo" disabled>Anulează</button>
     <button id="drawgj" title="GeoJSON în WGS84">GeoJSON</button>
     <button id="drawst" title="GeoJSON în Stereo 70">Stereo 70</button>
     <button id="drawcsv" title="Vârfuri în Stereo 70, pentru tabel">CSV</button>
@@ -468,7 +481,7 @@ select.tool{font:500 11.5px/1 var(--ui);border:1px solid var(--line);border-radi
 <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.2/proj4.js"></script>
 
 <script>
-const CFG = {"title": "Harta_Transgaz", "subtitle": "", "bounds": [[44.687289979548694, 25.446680673111924], [45.525408456200076, 26.6287057160876]], "initialBounds": [[44.77587757887037, 26.017333961401143], [45.08029785024501, 26.624116014944757]], "basemap": "osm", "infoDefault": "popup", "widgets": {"measure": true, "fullscreen": true, "minimap": false, "locate": true, "search": true, "print": true, "draw": true}, "layers": [{"name": "Transgaz_SRM_SCV_SPC_PM", "type": "geojson", "file": "data/transgaz_srm_scv_spc_pm.geojson", "geom": "point", "visible": true, "count": 95, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "PM", "g": "point", "s": {"f": "#beb297", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, {"label": "SCV", "g": "point", "s": {"f": "#e77148", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 13.23, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, {"label": "SPC", "g": "point", "s": {"f": "#ff9e17", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, {"label": "SRM", "g": "point", "s": {"f": "#a47158", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_imprejuiri", "type": "geojson", "file": "data/transgaz_imprejuiri.geojson", "geom": "polygon", "visible": true, "count": 127, "popup": true, "popupFields": ["stare", "operator", "detalii"], "km": null, "legend": [{"label": "Împrejmuiri", "g": "polygon", "s": {"f": "#4daf4a", "fo": 0.0, "s": "#4daf4a", "so": 1.0, "w": 3.63, "r": 5.0}, "img": {"src": "data/symbols/transgaz_imprejuiri_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_conducte", "type": "geojson", "file": "data/transgaz_conducte.geojson", "geom": "line", "visible": true, "count": 395, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "Conductă convenție exploatare", "g": "line", "s": {"f": "#dc10a2", "fo": 0.0, "s": "#dc10a2", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_0.png", "w": 20, "h": 20}}, {"label": "Conductă terț", "g": "line", "s": {"f": "#5f54dc", "fo": 0.0, "s": "#5f54dc", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_1.png", "w": 20, "h": 20}}, {"label": "Conductă transport", "g": "line", "s": {"f": "#232323", "fo": 0.0, "s": "#232323", "so": 1.0, "w": 4.54, "r": 5.0, "st": [{"s": "#232323", "so": 1.0, "w": 4.54, "cap": "square", "join": "bevel"}, {"s": "#ffff0f", "so": 1.0, "w": 3.02, "cap": "square", "join": "bevel"}], "cap": "square", "join": "bevel", "ml": true}, "img": {"src": "data/symbols/transgaz_conducte_2.png", "w": 20, "h": 20}}, {"label": "Racord", "g": "line", "s": {"f": "#af5800", "fo": 0.0, "s": "#af5800", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_4.png", "w": 20, "h": 20}}, {"label": "Tehnologic", "g": "line", "s": {"f": "#ffc84f", "fo": 0.0, "s": "#ffc84f", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_6.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limita_judet", "type": "geojson", "file": "data/limita_judet.geojson", "geom": "polygon", "visible": true, "count": 1, "popup": true, "popupFields": ["fid", "area", "perimeter"], "km": null, "legend": [{"label": "limita Judet", "g": "polygon", "s": {"f": "#3579b1", "fo": 0.0, "s": "#3579b1", "so": 1.0, "w": 7.56, "r": 5.0, "st": [{"s": "#3579b1", "so": 1.0, "w": 7.56, "cap": "square", "join": "bevel"}, {"s": "#b5b4b4", "so": 1.0, "w": 3.78, "d": "18.9,7.6", "cap": "square", "join": "bevel"}]}, "img": {"src": "data/symbols/limita_judet_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limite_UAT", "type": "geojson", "file": "data/limite_uat.geojson", "geom": "polygon", "visible": true, "count": 104, "popup": true, "popupFields": ["NAME", "gaze"], "km": null, "legend": [{"label": "limite UAT", "g": "polygon", "s": {"f": "#ffffff", "fo": 0.0, "s": "#ffffff", "so": 1.0, "w": 4.54, "r": 5.0, "st": [{"s": "#ffffff", "so": 1.0, "w": 4.54, "cap": "square", "join": "bevel"}, {"s": "#adadad", "so": 1.0, "w": 3.78, "d": "6,4", "cap": "square", "join": "bevel"}]}, "img": {"src": "data/symbols/limite_uat_1.png", "w": 20, "h": 20}}], "noLegend": false, "labels": {"size": 13.3, "color": "#cfca00", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8, "rules": [{"size": 13.3, "color": "#cfca00", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8}, {"size": 13.3, "color": "#00afff", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8}], "max": 1500, "angled": false, "inside": true}, "cluster": false, "opacity": 1.0}, {"type": "xyz", "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", "maxZoom": 21, "name": "Google Satellite", "visible": true, "opacity": 1.0}, {"type": "xyz", "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "maxZoom": 21, "minZoom": 0, "name": "OSM Standard", "visible": true, "opacity": 1.0}]};
+const CFG = {"title": "Harta_Transgaz", "subtitle": "", "bounds": [[44.6948397033275, 25.45255309568129], [45.52256966410797, 26.609985177716872]], "initialBounds": [[44.951785227936526, 26.166843218351612], [44.95381436582427, 26.17089485362777]], "basemap": "osm", "infoDefault": "popup", "widgets": {"measure": true, "fullscreen": true, "minimap": false, "locate": true, "search": true, "print": true, "draw": true}, "layers": [{"name": "Transgaz_SRM_SCV_SPC_PM", "type": "geojson", "file": "data/transgaz_srm_scv_spc_pm.geojson", "geom": "point", "visible": true, "count": 95, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "PM", "g": "point", "s": {"f": "#beb297", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, {"label": "SCV", "g": "point", "s": {"f": "#e77148", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 13.23, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, {"label": "SPC", "g": "point", "s": {"f": "#ff9e17", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, {"label": "SRM", "g": "point", "s": {"f": "#a47158", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_imprejuiri", "type": "geojson", "file": "data/transgaz_imprejuiri.geojson", "geom": "polygon", "visible": true, "count": 127, "popup": true, "popupFields": ["stare", "operator", "detalii"], "km": null, "legend": [{"label": "Împrejmuiri", "g": "polygon", "s": {"f": "#4daf4a", "fo": 0.0, "s": "#4daf4a", "so": 1.0, "w": 3.63, "r": 5.0}, "img": {"src": "data/symbols/transgaz_imprejuiri_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_conducte", "type": "geojson", "file": "data/transgaz_conducte.geojson", "geom": "line", "visible": true, "count": 395, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "Conductă convenție exploatare", "g": "line", "s": {"f": "#dc10a2", "fo": 0.0, "s": "#dc10a2", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_0.png", "w": 20, "h": 20}}, {"label": "Conductă terț", "g": "line", "s": {"f": "#5f54dc", "fo": 0.0, "s": "#5f54dc", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_1.png", "w": 20, "h": 20}}, {"label": "Conductă transport", "g": "line", "s": {"f": "#232323", "fo": 0.0, "s": "#232323", "so": 1.0, "w": 4.54, "r": 5.0, "st": [{"s": "#232323", "so": 1.0, "w": 4.54, "cap": "square", "join": "bevel"}, {"s": "#ffff0f", "so": 1.0, "w": 3.02, "cap": "square", "join": "bevel"}], "cap": "square", "join": "bevel", "ml": true}, "img": {"src": "data/symbols/transgaz_conducte_2.png", "w": 20, "h": 20}}, {"label": "Racord", "g": "line", "s": {"f": "#af5800", "fo": 0.0, "s": "#af5800", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_4.png", "w": 20, "h": 20}}, {"label": "Tehnologic", "g": "line", "s": {"f": "#ffc84f", "fo": 0.0, "s": "#ffc84f", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_6.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limita_judet", "type": "geojson", "file": "data/limita_judet.geojson", "geom": "polygon", "visible": true, "count": 1, "popup": true, "popupFields": ["fid", "area", "perimeter"], "km": null, "legend": [{"label": "limita Judet", "g": "polygon", "s": {"f": "#3579b1", "fo": 0.0, "s": "#3579b1", "so": 1.0, "w": 7.56, "r": 5.0, "st": [{"s": "#3579b1", "so": 1.0, "w": 7.56, "cap": "square", "join": "bevel"}, {"s": "#b5b4b4", "so": 1.0, "w": 3.78, "d": "18.9,7.6", "cap": "square", "join": "bevel"}]}, "img": {"src": "data/symbols/limita_judet_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limite_UAT", "type": "geojson", "file": "data/limite_uat.geojson", "geom": "polygon", "visible": true, "count": 104, "popup": true, "popupFields": ["NAME", "gaze"], "km": null, "legend": [{"label": "limite UAT", "g": "polygon", "s": {"f": "#ffffff", "fo": 0.0, "s": "#ffffff", "so": 1.0, "w": 4.54, "r": 5.0, "st": [{"s": "#ffffff", "so": 1.0, "w": 4.54, "cap": "square", "join": "bevel"}, {"s": "#adadad", "so": 1.0, "w": 3.78, "d": "6,4", "cap": "square", "join": "bevel"}]}, "img": {"src": "data/symbols/limite_uat_1.png", "w": 20, "h": 20}}], "noLegend": false, "labels": {"size": 13.3, "color": "#cfca00", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8, "rules": [{"size": 13.3, "color": "#cfca00", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8}, {"size": 13.3, "color": "#00afff", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8}], "max": 1500, "angled": false, "inside": true}, "cluster": false, "opacity": 1.0}, {"name": "Harta_Transgaz_desen_stereo70", "type": "geojson", "file": "data/harta_transgaz_desen_stereo70.geojson", "geom": "line", "visible": true, "count": 1, "popup": true, "popupFields": ["nume", "observatii", "lungime_m"], "km": null, "legend": [{"label": "Harta_Transgaz_desen_stereo70", "g": "line", "s": {"f": "#e8718d", "fo": 0.0, "s": "#e8718d", "so": 1.0, "w": 0.98, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/harta_transgaz_desen_stereo70_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"type": "xyz", "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", "maxZoom": 21, "name": "Google Satellite", "visible": true, "opacity": 1.0}, {"type": "xyz", "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "maxZoom": 21, "minZoom": 0, "name": "OSM Standard", "visible": true, "opacity": 1.0}]};
 
 proj4.defs("EPSG:3844",
   "+proj=sterea +lat_0=46 +lon_0=25 +k=0.99975 +x_0=500000 +y_0=500000 +ellps=krass " +
@@ -3493,6 +3506,9 @@ if (W.print) toolButton("print", "Tipărește harta cu legendă", openPrint);
 // se păstrează local și se exportă ca fișier, nu se trimit nicăieri.
 
 const DRAW_KEY = "ghpages.draw." + (location.pathname || "/");
+const DRAW_COLORS = ["#b4472f", "#1f5f8b", "#2e7d32", "#8e24aa", "#f9a825",
+                     "#111111", "#ffffff"];
+let drawColor = DRAW_COLORS[0];
 let drawPts = [];             // vârfurile figurii în lucru
 let drawTemp = null, drawVerts = [];
 let drawn = [];               // {id, type, latlngs, props, layer}
@@ -3500,10 +3516,11 @@ let drawSeq = 1;
 
 const drawGroup = L.featureGroup().addTo(map);
 
-function drawStyle(kind) {
+function drawStyle(kind, color) {
+  const c = color || drawColor;
   return kind === "polygon"
-    ? { color: "#b4472f", weight: 2, fillColor: "#b4472f", fillOpacity: 0.12 }
-    : { color: "#b4472f", weight: 2.5 };
+    ? { color: c, weight: 2, fillColor: c, fillOpacity: 0.12 }
+    : { color: c, weight: 2.5 };
 }
 
 function st70Of(ll) {
@@ -3556,15 +3573,55 @@ function measureOf(item) {
 
 function makeLayer(item) {
   const ll = item.latlngs;
+  const color = item.props.color || drawColor;
   if (item.type === "point") {
-    return L.circleMarker(ll[0], { radius: 6, color: "#b4472f", weight: 2,
+    return L.circleMarker(ll[0], { radius: 6, color: color, weight: 2.5,
       fillColor: "#fff", fillOpacity: 1 });
   }
-  if (item.type === "line") return L.polyline(ll, drawStyle("line"));
-  return L.polygon(ll, drawStyle("polygon"));
+  if (item.type === "line") return L.polyline(ll, drawStyle("line", color));
+  return L.polygon(ll, drawStyle("polygon", color));
 }
 
-function addDrawn(item) {
+// Istoricul acoperă atât vârfurile figurii în lucru, cât și operațiile
+// încheiate: fiecare intrare știe să se întoarcă singură.
+const undoStack = [];
+const UNDO_MAX = 50;
+
+function pushUndo(entry) {
+  undoStack.push(entry);
+  if (undoStack.length > UNDO_MAX) undoStack.shift();
+  updateUndoButton();
+}
+
+function updateUndoButton() {
+  const btn = document.getElementById("drawundo");
+  if (!btn) return;
+  const can = undoStack.length > 0 || drawPts.length > 0;
+  btn.disabled = !can;
+  btn.title = drawPts.length
+    ? "Șterge ultimul vârf (Ctrl+Z)"
+    : (undoStack.length ? "Anulează ultima operație (Ctrl+Z)" : "Nimic de anulat");
+}
+
+function undoLast() {
+  // cât timp se desenează, anularea scoate ultimul vârf
+  if (drawPts.length) {
+    drawPts.pop();
+    const v = drawVerts.pop();
+    if (v) map.removeLayer(v);
+    refreshTemp();
+    updateUndoButton();
+    return;
+  }
+  const entry = undoStack.pop();
+  if (!entry) return;
+  try { entry.undo(); } catch (err) { /* ignoră */ }
+  renderDrawList();
+  saveDrawn();
+  updateUndoButton();
+}
+
+function addDrawn(item, silent) {
   item.layer = makeLayer(item);
   item.layer.addTo(drawGroup);
   item.layer.on("click", ev => {
@@ -3573,6 +3630,15 @@ function addDrawn(item) {
     openDrawPopup(item, ev.latlng);
   });
   drawn.push(item);
+  if (!silent) {
+    pushUndo({ undo: () => {
+      const index = drawn.indexOf(item);
+      if (index >= 0) {
+        drawGroup.removeLayer(item.layer);
+        drawn.splice(index, 1);
+      }
+    } });
+  }
   renderDrawList();
   saveDrawn();
 }
@@ -3600,16 +3666,26 @@ document.addEventListener("click", ev => {
     const name = prompt("Denumire:", item.props.name || "");
     if (name === null) return;
     const note = prompt("Observații:", item.props.note || "");
+    const before = { name: item.props.name, note: item.props.note };
     item.props.name = name;
     item.props.note = note === null ? item.props.note : note;
+    pushUndo({ undo: () => {
+      item.props.name = before.name;
+      item.props.note = before.note;
+    } });
     renderDrawList();
     saveDrawn();
     map.closePopup();
   } else if (del) {
     const index = drawn.findIndex(d => String(d.id) === del);
     if (index < 0) return;
-    drawGroup.removeLayer(drawn[index].layer);
+    const removed = drawn[index];
+    drawGroup.removeLayer(removed.layer);
     drawn.splice(index, 1);
+    pushUndo({ undo: () => {
+      removed.layer.addTo(drawGroup);
+      drawn.splice(Math.min(index, drawn.length), 0, removed);
+    } });
     renderDrawList();
     saveDrawn();
     map.closePopup();
@@ -3632,6 +3708,7 @@ function refreshTemp() {
   drawTemp = drawMode === "polygon"
     ? L.polygon(drawPts, Object.assign(drawStyle("polygon"), { dashArray: "5,4" }))
     : L.polyline(drawPts, Object.assign(drawStyle("line"), { dashArray: "5,4" }));
+  drawTemp.options.color = drawColor;
   drawTemp.addTo(map);
 }
 
@@ -3641,7 +3718,7 @@ function finishShape() {
   if (drawMode !== "point" && drawPts.length < need) { resetTemp(); return; }
   addDrawn({ id: drawSeq++, type: drawMode,
              latlngs: drawPts.map(p => ({ lat: p.lat, lng: p.lng })),
-             props: { name: "", note: "" } });
+             props: { name: "", note: "", color: drawColor } });
   resetTemp();
 }
 
@@ -3657,7 +3734,8 @@ function setDrawMode(mode, btn) {
   hint.innerHTML = drawMode === "point"
     ? "<b>Punct:</b> clic pentru a adăuga, Esc pentru a opri"
     : (drawMode ? "<b>" + (drawMode === "line" ? "Linie" : "Poligon") +
-        ":</b> clic pentru vârfuri, dublu-clic pentru final, Esc anulează" : "");
+        ":</b> clic pentru vârfuri, Ctrl+Z șterge ultimul, dublu-clic final, Esc renunță"
+        : "");
   if (drawMode) map.doubleClickZoom.disable(); else map.doubleClickZoom.enable();
 }
 
@@ -3666,11 +3744,12 @@ map.on("click", ev => {
   if (drawMode === "point") {
     addDrawn({ id: drawSeq++, type: "point",
                latlngs: [{ lat: ev.latlng.lat, lng: ev.latlng.lng }],
-               props: { name: "", note: "" } });
+               props: { name: "", note: "", color: drawColor } });
     return;
   }
   drawPts.push(ev.latlng);
-  const v = L.circleMarker(ev.latlng, { radius: 3.5, color: "#b4472f", weight: 2,
+  updateUndoButton();
+  const v = L.circleMarker(ev.latlng, { radius: 3.5, color: drawColor, weight: 2,
     fillColor: "#fff", fillOpacity: 1 }).addTo(map);
   drawVerts.push(v);
   refreshTemp();
@@ -3680,6 +3759,9 @@ map.on("dblclick", () => { if (drawMode && drawMode !== "point") finishShape(); 
 document.addEventListener("keydown", ev => {
   if (ev.key === "Escape" && drawMode) setDrawMode(null);
   if (ev.key === "Enter" && drawMode && drawMode !== "point") finishShape();
+  if ((ev.ctrlKey || ev.metaKey) && (ev.key === "z" || ev.key === "Z")) {
+    if (W.draw) { ev.preventDefault(); undoLast(); }
+  }
 });
 
 /* panoul elementelor desenate și exportul ------------------------------- */
@@ -3699,8 +3781,54 @@ function loadDrawn() {
   if (!saved || !saved.items) return;
   drawSeq = saved.seq || 1;
   saved.items.forEach(item => addDrawn({ id: item.id, type: item.type,
-    latlngs: item.latlngs, props: item.props || { name: "", note: "" } }));
+    latlngs: item.latlngs,
+    props: item.props || { name: "", note: "" } }, true));
 }
+
+function renderPalette() {
+  const box = document.getElementById("drawpalette");
+  if (!box) return;
+  box.innerHTML = DRAW_COLORS.map(c =>
+    '<span class="sw' + (c === drawColor ? " on" : "") + '" data-color="' + c +
+    '" style="background:' + c + '" title="' + c + '"></span>').join("") +
+    '<input type="color" id="drawcustom" value="' + drawColor +
+    '" title="Altă culoare">';
+}
+
+function setDrawColor(color) {
+  drawColor = color;
+  renderPalette();
+  // elementul selectat în panou, dacă există, primește noua culoare
+  if (selectedDraw) {
+    const before = selectedDraw.props.color;
+    const item = selectedDraw;
+    item.props.color = color;
+    if (item.layer.setStyle) {
+      item.layer.setStyle(item.type === "point"
+        ? { color: color } : drawStyle(item.type, color));
+    }
+    pushUndo({ undo: () => {
+      item.props.color = before;
+      if (item.layer.setStyle) {
+        item.layer.setStyle(item.type === "point"
+          ? { color: before } : drawStyle(item.type, before));
+      }
+      renderDrawList();
+    } });
+    renderDrawList();
+    saveDrawn();
+  }
+}
+
+let selectedDraw = null;
+
+document.addEventListener("click", ev => {
+  const sw = ev.target && ev.target.dataset && ev.target.dataset.color;
+  if (sw) setDrawColor(sw);
+});
+document.addEventListener("input", ev => {
+  if (ev.target && ev.target.id === "drawcustom") setDrawColor(ev.target.value);
+});
 
 function renderDrawList() {
   const box = document.getElementById("drawlist");
@@ -3710,7 +3838,9 @@ function renderDrawList() {
   document.getElementById("drawcount").textContent =
     drawn.length + (drawn.length === 1 ? " element" : " elemente");
   box.innerHTML = drawn.map(d =>
-    '<div class="drawrow" data-draw-zoom="' + d.id + '">' +
+    '<div class="drawrow' + (selectedDraw === d ? " sel" : "") +
+    '" data-draw-zoom="' + d.id + '">' +
+    '<span class="dot" style="background:' + (d.props.color || "#b4472f") + '"></span>' +
     '<span class="dk">' + (d.type === "point" ? "pct" :
       (d.type === "line" ? "lin" : "pol")) + "</span>" +
     '<span class="dn">' + esc(d.props.name || "(fără denumire)") + "</span>" +
@@ -3722,6 +3852,8 @@ document.addEventListener("click", ev => {
   if (!row) return;
   const item = drawn.find(d => String(d.id) === row.dataset.drawZoom);
   if (!item) return;
+  selectedDraw = item;
+  renderDrawList();
   try {
     if (item.type === "point") map.setView(item.latlngs[0], Math.max(map.getZoom(), 17));
     else map.fitBounds(item.layer.getBounds(), { padding: [40, 40] });
@@ -3746,7 +3878,8 @@ function drawnGeoJson(st70) {
       ring.push(ring[0]);
       geometry = { type: "Polygon", coordinates: [ring] };
     }
-    const props = { nume: d.props.name || "", observatii: d.props.note || "" };
+    const props = { nume: d.props.name || "", observatii: d.props.note || "",
+                    culoare: d.props.color || "#b4472f" };
     if (d.type === "polygon") {
       props.suprafata_mp = +ringArea(d.latlngs).toFixed(2);
       props.perimetru_m = +lineLength(d.latlngs.concat([d.latlngs[0]])).toFixed(2);
@@ -3807,11 +3940,18 @@ function exportDrawn(kind) {
 document.getElementById("drawclear").addEventListener("click", () => {
   if (!drawn.length) return;
   if (!confirm("Ștergeți toate elementele desenate?")) return;
-  drawn.forEach(d => drawGroup.removeLayer(d.layer));
+  const all = drawn.slice();
+  all.forEach(d => drawGroup.removeLayer(d.layer));
   drawn = [];
+  pushUndo({ undo: () => {
+    all.forEach(d => d.layer.addTo(drawGroup));
+    drawn = all;
+  } });
   renderDrawList();
   saveDrawn();
+  updateUndoButton();
 });
+document.getElementById("drawundo").addEventListener("click", undoLast);
 document.getElementById("drawgj").addEventListener("click", () => exportDrawn("wgs"));
 document.getElementById("drawst").addEventListener("click", () => exportDrawn("st70"));
 document.getElementById("drawcsv").addEventListener("click", () => exportDrawn("csv"));
@@ -3826,7 +3966,9 @@ if (W.draw) {
     .add("drawbtn");
   toolButton("polygon", "Desenează poligon", b => setDrawMode("polygon", b)).classList
     .add("drawbtn");
+  renderPalette();
   loadDrawn();
+  updateUndoButton();
 }
 
 /* panoul de straturi ----------------------------------------------------- */
