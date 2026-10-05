@@ -418,7 +418,7 @@ select.tool{font:500 11.5px/1 var(--ui);border:1px solid var(--line);border-radi
 <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.2/proj4.js"></script>
 
 <script>
-const CFG = {"title": "Harta_Transgaz", "subtitle": "", "bounds": [[44.687289979548694, 25.446680673111924], [45.525408456200076, 26.6287057160876]], "initialBounds": [[44.67949038078271, 25.887706127988885], [44.72989330174421, 25.98811979609044]], "basemap": "osm", "infoDefault": "popup", "widgets": {"measure": true, "fullscreen": true, "minimap": false, "locate": true, "search": true, "print": true}, "layers": [{"name": "Transgaz_SRM_SCV_SPC_PM", "type": "geojson", "file": "data/transgaz_srm_scv_spc_pm.geojson", "geom": "point", "visible": true, "count": 95, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "PM", "g": "point", "s": {"f": "#beb297", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, {"label": "SCV", "g": "point", "s": {"f": "#e77148", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 13.23, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, {"label": "SPC", "g": "point", "s": {"f": "#ff9e17", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, {"label": "SRM", "g": "point", "s": {"f": "#a47158", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_imprejuiri", "type": "geojson", "file": "data/transgaz_imprejuiri.geojson", "geom": "polygon", "visible": true, "count": 127, "popup": true, "popupFields": ["stare", "operator", "detalii"], "km": null, "legend": [{"label": "Împrejmuiri", "g": "polygon", "s": {"f": "#4daf4a", "fo": 0.0, "s": "#4daf4a", "so": 1.0, "w": 3.63, "r": 5.0}, "img": {"src": "data/symbols/transgaz_imprejuiri_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_conducte", "type": "geojson", "file": "data/transgaz_conducte.geojson", "geom": "line", "visible": true, "count": 395, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "Conductă convenție exploatare", "g": "line", "s": {"f": "#dc10a2", "fo": 0.0, "s": "#dc10a2", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_0.png", "w": 20, "h": 20}}, {"label": "Conductă terț", "g": "line", "s": {"f": "#5f54dc", "fo": 0.0, "s": "#5f54dc", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_1.png", "w": 20, "h": 20}}, {"label": "Conductă transport", "g": "line", "s": {"f": "#ffff0f", "fo": 0.0, "s": "#ffff0f", "so": 1.0, "w": 5.67, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_2.png", "w": 20, "h": 20}}, {"label": "Racord", "g": "line", "s": {"f": "#af5800", "fo": 0.0, "s": "#af5800", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_4.png", "w": 20, "h": 20}}, {"label": "Tehnologic", "g": "line", "s": {"f": "#ffc84f", "fo": 0.0, "s": "#ffc84f", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_6.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limita_judet", "type": "geojson", "file": "data/limita_judet.geojson", "geom": "polygon", "visible": true, "count": 1, "popup": false, "popupFields": [], "km": null, "legend": [{"label": "limita Judet", "g": "polygon", "s": {"f": "#3579b1", "fo": 0.0, "s": "#3579b1", "so": 1.0, "w": 7.56, "r": 5.0}, "img": {"src": "data/symbols/limita_judet_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limite_UAT", "type": "geojson", "file": "data/limite_uat.geojson", "geom": "polygon", "visible": true, "count": 104, "popup": true, "popupFields": ["NAME", "gaze"], "km": null, "legend": [{"label": "limite UAT", "g": "polygon", "s": {"f": "#ffffff", "fo": 0.0, "s": "#ffffff", "so": 1.0, "w": 5.67, "r": 5.0, "d": "6,4"}, "img": {"src": "data/symbols/limite_uat_1.png", "w": 20, "h": 20}}], "noLegend": false, "labels": {"size": 13.3, "color": "#000000", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8, "max": 1500, "angled": false, "inside": true}, "cluster": false, "opacity": 1.0}, {"type": "xyz", "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "maxZoom": 21, "minZoom": 0, "name": "OSM Standard", "visible": true, "opacity": 1.0}]};
+const CFG = {"title": "Harta_Transgaz", "subtitle": "", "bounds": [[44.687289979548694, 25.446680673111924], [45.525408456200076, 26.6287057160876]], "initialBounds": [[44.91140737987281, 26.11715851969713], [44.98734779698321, 26.268749646212225]], "basemap": "osm", "infoDefault": "popup", "widgets": {"measure": true, "fullscreen": true, "minimap": false, "locate": true, "search": true, "print": true}, "layers": [{"name": "Transgaz_SRM_SCV_SPC_PM", "type": "geojson", "file": "data/transgaz_srm_scv_spc_pm.geojson", "geom": "point", "visible": true, "count": 95, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "PM", "g": "point", "s": {"f": "#beb297", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, {"label": "SCV", "g": "point", "s": {"f": "#e77148", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 13.23, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, {"label": "SPC", "g": "point", "s": {"f": "#ff9e17", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, {"label": "SRM", "g": "point", "s": {"f": "#a47158", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_imprejuiri", "type": "geojson", "file": "data/transgaz_imprejuiri.geojson", "geom": "polygon", "visible": true, "count": 127, "popup": true, "popupFields": ["stare", "operator", "detalii"], "km": null, "legend": [{"label": "Împrejmuiri", "g": "polygon", "s": {"f": "#4daf4a", "fo": 0.0, "s": "#4daf4a", "so": 1.0, "w": 3.63, "r": 5.0}, "img": {"src": "data/symbols/transgaz_imprejuiri_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_conducte", "type": "geojson", "file": "data/transgaz_conducte.geojson", "geom": "line", "visible": true, "count": 395, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "Conductă convenție exploatare", "g": "line", "s": {"f": "#dc10a2", "fo": 0.0, "s": "#dc10a2", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_0.png", "w": 20, "h": 20}}, {"label": "Conductă terț", "g": "line", "s": {"f": "#5f54dc", "fo": 0.0, "s": "#5f54dc", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_1.png", "w": 20, "h": 20}}, {"label": "Conductă transport", "g": "line", "s": {"f": "#232323", "fo": 0.0, "s": "#232323", "so": 1.0, "w": 4.54, "r": 5.0, "st": [{"s": "#232323", "so": 1.0, "w": 4.54, "cap": "square", "join": "bevel"}, {"s": "#ffff0f", "so": 1.0, "w": 3.02, "cap": "square", "join": "bevel"}], "cap": "square", "join": "bevel", "ml": true}, "img": {"src": "data/symbols/transgaz_conducte_2.png", "w": 20, "h": 20}}, {"label": "Racord", "g": "line", "s": {"f": "#af5800", "fo": 0.0, "s": "#af5800", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_4.png", "w": 20, "h": 20}}, {"label": "Tehnologic", "g": "line", "s": {"f": "#ffc84f", "fo": 0.0, "s": "#ffc84f", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_6.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limita_judet", "type": "geojson", "file": "data/limita_judet.geojson", "geom": "polygon", "visible": true, "count": 1, "popup": true, "popupFields": ["fid", "area", "perimeter"], "km": null, "legend": [{"label": "limita Judet", "g": "polygon", "s": {"f": "#3579b1", "fo": 0.0, "s": "#3579b1", "so": 1.0, "w": 7.56, "r": 5.0, "st": [{"s": "#3579b1", "so": 1.0, "w": 7.56, "cap": "square", "join": "bevel"}, {"s": "#b5b4b4", "so": 1.0, "w": 3.78, "d": "18.9,7.6", "cap": "square", "join": "bevel"}]}, "img": {"src": "data/symbols/limita_judet_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limite_UAT", "type": "geojson", "file": "data/limite_uat.geojson", "geom": "polygon", "visible": true, "count": 104, "popup": true, "popupFields": ["NAME", "gaze"], "km": null, "legend": [{"label": "limite UAT", "g": "polygon", "s": {"f": "#ffffff", "fo": 0.0, "s": "#ffffff", "so": 1.0, "w": 5.67, "r": 5.0, "d": "6,4"}, "img": {"src": "data/symbols/limite_uat_1.png", "w": 20, "h": 20}}], "noLegend": false, "labels": {"size": 13.3, "color": "#000000", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8, "max": 1500, "angled": false, "inside": true}, "cluster": false, "opacity": 1.0}, {"type": "xyz", "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", "maxZoom": 21, "name": "Google Satellite", "visible": true, "opacity": 1.0}, {"type": "xyz", "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "maxZoom": 21, "minZoom": 0, "name": "OSM Standard", "visible": true, "opacity": 1.0}]};
 
 proj4.defs("EPSG:3844",
   "+proj=sterea +lat_0=46 +lon_0=25 +k=0.99975 +x_0=500000 +y_0=500000 +ellps=krass " +
@@ -558,8 +558,38 @@ function fillPattern(p) {
 if (L.Canvas && L.Canvas.prototype._fillStroke) {
   const base = L.Canvas.prototype._fillStroke;
   L.Canvas.prototype._fillStroke = function (ctx, layer) {
+    const stack = layer.options && layer.options.strokeStack;
     const p = layer.options && layer.options.fillPatternDef;
     const t = layer.options && layer.options.fillTile;
+
+    if (stack && stack.length) {
+      // umplerea (sau hașura) întâi, apoi fiecare contur peste precedentul
+      if (layer.options.fill) {
+        const pat = p ? fillPattern(p) : (t ? tilePattern(t) : null);
+        ctx.globalAlpha = layer.options.fillOpacity != null ? layer.options.fillOpacity : 1;
+        ctx.fillStyle = pat || layer.options.fillColor;
+        if (pat || (layer.options.fillOpacity || 0) > 0) {
+          ctx.fill(layer.options.fillRule || "evenodd");
+        }
+      }
+      for (let k = 0; k < stack.length; k++) {
+        const st = stack[k];
+        if (!st.weight) continue;
+        ctx.globalAlpha = st.opacity;
+        ctx.lineWidth = st.weight;
+        ctx.strokeStyle = st.color;
+        ctx.lineCap = st.lineCap;
+        ctx.lineJoin = st.lineJoin;
+        if (ctx.setLineDash) {
+          ctx.setLineDash(st.dashArray ? st.dashArray.split(",").map(Number) : []);
+        }
+        ctx.stroke();
+      }
+      if (ctx.setLineDash) ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+      return;
+    }
+
     if (p || t) {
       const pat = p ? fillPattern(p) : tilePattern(t);
       if (pat) {
@@ -608,6 +638,18 @@ function styleOf(feature) {
   if (s.cap) out.lineCap = s.cap;
   if (s.join) out.lineJoin = s.join;
   if (out.weight === 0) out.stroke = false;
+  if (s.st && s.st.length > 1) {
+    // simbol compus din mai multe linii: se păstrează toată stiva, desenată
+    // în ordinea din QGIS (prima dedesubt)
+    out.strokeStack = s.st.map(st => ({
+      color: st.s || DEF.s,
+      weight: st.wM ? mapUnits(st.wM, st.w, 0.3, 40) : (st.w == null ? 1 : st.w),
+      opacity: st.so == null ? 1 : st.so,
+      dashArray: st.d || null,
+      lineCap: st.cap || "round",
+      lineJoin: st.join || "round"
+    }));
+  }
   if (s.p) { out.fillPatternDef = s.p; out.fill = true; }
   if (s.ptile) { out.fillTile = s.ptile; out.fill = true; }
   if (!out.fillPatternDef && !out.fillTile && out.fillOpacity <= 0) out.fill = false;
@@ -621,6 +663,14 @@ function swatch(geom, s, img) {
   s = s || DEF;
   const stroke = s.s || DEF.s, w = Math.min(4, s.w == null ? 1 : s.w) || 0.8;
   const dash = s.d ? ' stroke-dasharray="' + s.d + '"' : "";
+  if (s.st && s.st.length > 1 && geom !== "point") {
+    const lines = s.st.map(st =>
+      '<line x1="1" y1="6" x2="21" y2="6" stroke="' + (st.s || stroke) +
+      '" stroke-width="' + Math.min(5, st.w == null ? 1 : st.w) +
+      '" stroke-opacity="' + (st.so == null ? 1 : st.so) + '"' +
+      (st.d ? ' stroke-dasharray="' + st.d + '"' : "") + "/>").join("");
+    return '<svg width="22" height="12">' + lines + "</svg>";
+  }
   if (geom === "line")
     return '<svg width="22" height="12"><line x1="1" y1="6" x2="21" y2="6" stroke="' + stroke +
       '" stroke-width="' + w + '" stroke-opacity="' + (s.so == null ? 1 : s.so) + '"' + dash + '/></svg>';
@@ -874,10 +924,14 @@ CFG.layers.forEach((cfg, i) => {
     const legend = cfg.legend || [];
     const mk = (st) => {
       if (cfg.geom === "line") {
+        // tile-urile nu permit desen multiplu: se folosește conturul dominant
+        const top = st.st && st.st.length > 1
+          ? st.st.reduce((a, b) => ((b.w || 0) > (a.w || 0) ? b : a))
+          : st;
         return new protomapsL.LineSymbolizer({
-          color: st.s || DEF.s, width: st.w == null ? 1 : st.w,
-          opacity: st.so == null ? 1 : st.so,
-          dash: st.d ? st.d.split(",").map(Number) : undefined });
+          color: top.s || DEF.s, width: top.w == null ? 1 : top.w,
+          opacity: top.so == null ? 1 : top.so,
+          dash: top.d ? top.d.split(",").map(Number) : undefined });
       }
       if (cfg.geom === "point") {
         return new protomapsL.CircleSymbolizer({
@@ -2688,7 +2742,21 @@ function drawFeaturePdf(doc, feature, entry, pageOf, unitToPt) {
         hatchPdf(doc, coords, pageOf, s.p, unitToPt);
         doc.restore();
       }
-      if (weight > 0 && strokeOp > 0) {
+      const stack = s.st && s.st.length > 1 ? s.st : null;
+      if (stack) {
+        stack.forEach(st => {
+          const w = st.wM ? st.wM * unitToPt : (st.w == null ? 1 : st.w) * 0.75;
+          if (w <= 0) return;
+          doc.save();
+          doc.alpha(st.so == null ? 1 : st.so, st.so == null ? 1 : st.so);
+          doc.strokeColor(st.s || DEF.s);
+          doc.lineWidth(w);
+          doc.dash(st.d);
+          polyPath(doc, coords, pageOf);
+          doc.push("S");
+          doc.restore();
+        });
+      } else if (weight > 0 && strokeOp > 0) {
         doc.save();
         doc.alpha(strokeOp, strokeOp);
         doc.strokeColor(s.s || DEF.s);
@@ -2704,6 +2772,26 @@ function drawFeaturePdf(doc, feature, entry, pageOf, unitToPt) {
 
   const lines = geom.type === "LineString" ? [geom.coordinates]
               : (geom.type === "MultiLineString" ? geom.coordinates : null);
+  if (lines && s.st && s.st.length > 1) {
+    s.st.forEach(st => {
+      const w = st.wM ? st.wM * unitToPt : (st.w == null ? 1 : st.w) * 0.75;
+      if (w <= 0) return;
+      doc.save();
+      doc.alpha(st.so == null ? 1 : st.so, st.so == null ? 1 : st.so);
+      doc.strokeColor(st.s || DEF.s);
+      doc.lineWidth(Math.max(0.15, w));
+      doc.dash(st.d);
+      lines.forEach(line => {
+        line.forEach((c, i) => {
+          const p = pageOf(c[1], c[0]);
+          if (i === 0) doc.moveTo(p.x, p.y); else doc.lineTo(p.x, p.y);
+        });
+        doc.push("S");
+      });
+      doc.restore();
+    });
+    return;
+  }
   if (lines) {
     doc.save();
     doc.alpha(strokeOp, strokeOp);
