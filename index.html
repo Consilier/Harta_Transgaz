@@ -418,7 +418,7 @@ select.tool{font:500 11.5px/1 var(--ui);border:1px solid var(--line);border-radi
 <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.2/proj4.js"></script>
 
 <script>
-const CFG = {"title": "Harta_Transgaz", "subtitle": "", "bounds": [[44.687289979548694, 25.446680673111924], [45.525408456200076, 26.6287057160876]], "initialBounds": [[44.76292384640161, 26.017623540749508], [45.06734455540838, 26.624268337873826]], "basemap": "osm", "infoDefault": "popup", "widgets": {"measure": true, "fullscreen": true, "minimap": false, "locate": true, "search": true, "print": true}, "layers": [{"name": "Transgaz_SRM_SCV_SPC_PM", "type": "geojson", "file": "data/transgaz_srm_scv_spc_pm.geojson", "geom": "point", "visible": true, "count": 95, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "PM", "g": "point", "s": {"f": "#beb297", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, {"label": "SCV", "g": "point", "s": {"f": "#e77148", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 13.23, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, {"label": "SPC", "g": "point", "s": {"f": "#ff9e17", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, {"label": "SRM", "g": "point", "s": {"f": "#a47158", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_imprejuiri", "type": "geojson", "file": "data/transgaz_imprejuiri.geojson", "geom": "polygon", "visible": true, "count": 127, "popup": true, "popupFields": ["stare", "operator", "detalii"], "km": null, "legend": [{"label": "Împrejmuiri", "g": "polygon", "s": {"f": "#4daf4a", "fo": 0.0, "s": "#4daf4a", "so": 1.0, "w": 3.63, "r": 5.0}, "img": {"src": "data/symbols/transgaz_imprejuiri_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_conducte", "type": "geojson", "file": "data/transgaz_conducte.geojson", "geom": "line", "visible": true, "count": 395, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "Conductă convenție exploatare", "g": "line", "s": {"f": "#dc10a2", "fo": 0.0, "s": "#dc10a2", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_0.png", "w": 20, "h": 20}}, {"label": "Conductă terț", "g": "line", "s": {"f": "#5f54dc", "fo": 0.0, "s": "#5f54dc", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_1.png", "w": 20, "h": 20}}, {"label": "Conductă transport", "g": "line", "s": {"f": "#232323", "fo": 0.0, "s": "#232323", "so": 1.0, "w": 4.54, "r": 5.0, "st": [{"s": "#232323", "so": 1.0, "w": 4.54, "cap": "square", "join": "bevel"}, {"s": "#ffff0f", "so": 1.0, "w": 3.02, "cap": "square", "join": "bevel"}], "cap": "square", "join": "bevel", "ml": true}, "img": {"src": "data/symbols/transgaz_conducte_2.png", "w": 20, "h": 20}}, {"label": "Racord", "g": "line", "s": {"f": "#af5800", "fo": 0.0, "s": "#af5800", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_4.png", "w": 20, "h": 20}}, {"label": "Tehnologic", "g": "line", "s": {"f": "#ffc84f", "fo": 0.0, "s": "#ffc84f", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_6.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limita_judet", "type": "geojson", "file": "data/limita_judet.geojson", "geom": "polygon", "visible": true, "count": 1, "popup": true, "popupFields": ["fid", "area", "perimeter"], "km": null, "legend": [{"label": "limita Judet", "g": "polygon", "s": {"f": "#3579b1", "fo": 0.0, "s": "#3579b1", "so": 1.0, "w": 7.56, "r": 5.0, "st": [{"s": "#3579b1", "so": 1.0, "w": 7.56, "cap": "square", "join": "bevel"}, {"s": "#b5b4b4", "so": 1.0, "w": 3.78, "d": "18.9,7.6", "cap": "square", "join": "bevel"}]}, "img": {"src": "data/symbols/limita_judet_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limite_UAT", "type": "geojson", "file": "data/limite_uat.geojson", "geom": "polygon", "visible": true, "count": 104, "popup": true, "popupFields": ["NAME", "gaze"], "km": null, "legend": [{"label": "limite UAT", "g": "polygon", "s": {"f": "#ffffff", "fo": 0.0, "s": "#ffffff", "so": 1.0, "w": 5.67, "r": 5.0, "d": "6,4"}, "img": {"src": "data/symbols/limite_uat_1.png", "w": 20, "h": 20}}], "noLegend": false, "labels": {"size": 13.3, "color": "#cfca00", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8, "max": 1500, "angled": false, "inside": true}, "cluster": false, "opacity": 1.0}, {"type": "xyz", "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", "maxZoom": 21, "name": "Google Satellite", "visible": true, "opacity": 1.0}, {"type": "xyz", "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "maxZoom": 21, "minZoom": 0, "name": "OSM Standard", "visible": true, "opacity": 1.0}]};
+const CFG = {"title": "Harta_Transgaz", "subtitle": "", "bounds": [[44.687289979548694, 25.446680673111924], [45.525408456200076, 26.6287057160876]], "initialBounds": [[44.77587757887037, 26.017333961401143], [45.08029785024501, 26.624116014944757]], "basemap": "osm", "infoDefault": "popup", "widgets": {"measure": true, "fullscreen": true, "minimap": false, "locate": true, "search": true, "print": true}, "layers": [{"name": "Transgaz_SRM_SCV_SPC_PM", "type": "geojson", "file": "data/transgaz_srm_scv_spc_pm.geojson", "geom": "point", "visible": true, "count": 95, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "PM", "g": "point", "s": {"f": "#beb297", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, {"label": "SCV", "g": "point", "s": {"f": "#e77148", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 13.23, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, {"label": "SPC", "g": "point", "s": {"f": "#ff9e17", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, {"label": "SRM", "g": "point", "s": {"f": "#a47158", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_imprejuiri", "type": "geojson", "file": "data/transgaz_imprejuiri.geojson", "geom": "polygon", "visible": true, "count": 127, "popup": true, "popupFields": ["stare", "operator", "detalii"], "km": null, "legend": [{"label": "Împrejmuiri", "g": "polygon", "s": {"f": "#4daf4a", "fo": 0.0, "s": "#4daf4a", "so": 1.0, "w": 3.63, "r": 5.0}, "img": {"src": "data/symbols/transgaz_imprejuiri_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_conducte", "type": "geojson", "file": "data/transgaz_conducte.geojson", "geom": "line", "visible": true, "count": 395, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "Conductă convenție exploatare", "g": "line", "s": {"f": "#dc10a2", "fo": 0.0, "s": "#dc10a2", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_0.png", "w": 20, "h": 20}}, {"label": "Conductă terț", "g": "line", "s": {"f": "#5f54dc", "fo": 0.0, "s": "#5f54dc", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_1.png", "w": 20, "h": 20}}, {"label": "Conductă transport", "g": "line", "s": {"f": "#232323", "fo": 0.0, "s": "#232323", "so": 1.0, "w": 4.54, "r": 5.0, "st": [{"s": "#232323", "so": 1.0, "w": 4.54, "cap": "square", "join": "bevel"}, {"s": "#ffff0f", "so": 1.0, "w": 3.02, "cap": "square", "join": "bevel"}], "cap": "square", "join": "bevel", "ml": true}, "img": {"src": "data/symbols/transgaz_conducte_2.png", "w": 20, "h": 20}}, {"label": "Racord", "g": "line", "s": {"f": "#af5800", "fo": 0.0, "s": "#af5800", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_4.png", "w": 20, "h": 20}}, {"label": "Tehnologic", "g": "line", "s": {"f": "#ffc84f", "fo": 0.0, "s": "#ffc84f", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_6.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limita_judet", "type": "geojson", "file": "data/limita_judet.geojson", "geom": "polygon", "visible": true, "count": 1, "popup": true, "popupFields": ["fid", "area", "perimeter"], "km": null, "legend": [{"label": "limita Judet", "g": "polygon", "s": {"f": "#3579b1", "fo": 0.0, "s": "#3579b1", "so": 1.0, "w": 7.56, "r": 5.0, "st": [{"s": "#3579b1", "so": 1.0, "w": 7.56, "cap": "square", "join": "bevel"}, {"s": "#b5b4b4", "so": 1.0, "w": 3.78, "d": "18.9,7.6", "cap": "square", "join": "bevel"}]}, "img": {"src": "data/symbols/limita_judet_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limite_UAT", "type": "geojson", "file": "data/limite_uat.geojson", "geom": "polygon", "visible": true, "count": 104, "popup": true, "popupFields": ["NAME", "gaze"], "km": null, "legend": [{"label": "limite UAT", "g": "polygon", "s": {"f": "#ffffff", "fo": 0.0, "s": "#ffffff", "so": 1.0, "w": 5.67, "r": 5.0, "d": "6,4"}, "img": {"src": "data/symbols/limite_uat_1.png", "w": 20, "h": 20}}], "noLegend": false, "labels": {"size": 13.3, "color": "#cfca00", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8, "rules": [{"size": 13.3, "color": "#cfca00", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8}, {"size": 13.3, "color": "#00afff", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8}], "max": 1500, "angled": false, "inside": true}, "cluster": false, "opacity": 1.0}, {"type": "xyz", "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", "maxZoom": 21, "name": "Google Satellite", "visible": true, "opacity": 1.0}, {"type": "xyz", "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "maxZoom": 21, "minZoom": 0, "name": "OSM Standard", "visible": true, "opacity": 1.0}]};
 
 proj4.defs("EPSG:3844",
   "+proj=sterea +lat_0=46 +lon_0=25 +k=0.99975 +x_0=500000 +y_0=500000 +ellps=krass " +
@@ -1749,10 +1749,9 @@ document.getElementById("tcsv").addEventListener("click", () => {
 /* etichete -------------------------------------------------------------- */
 const labelCss = [];
 const labelFallback = [];
-CFG.layers.forEach((cfg, i) => {
-  if (!cfg.labels) return;
-  const s = cfg.labels;
-  let rule = ".lb" + i + "{color:" + s.color + ";font-size:" + s.size + "px;" +
+
+function labelRuleCss(s, selector) {
+  let rule = selector + "{color:" + s.color + ";font-size:" + s.size + "px;" +
     (s.bold ? "font-weight:700;" : "font-weight:500;") +
     (s.italic ? "font-style:italic;" : "") +
     (s.family ? "font-family:'" + s.family + "',var(--ui);" : "");
@@ -1769,7 +1768,17 @@ CFG.layers.forEach((cfg, i) => {
     }
     rule += "text-shadow:" + ring.join(",") + ";";
   }
-  labelCss.push(rule + "}");
+  return rule + "}";
+}
+
+CFG.layers.forEach((cfg, i) => {
+  if (!cfg.labels) return;
+  labelCss.push(labelRuleCss(cfg.labels, ".lb" + i));
+  // etichetare pe reguli: fiecare regulă are propriul stil
+  (cfg.labels.rules || []).forEach((rs, k) => {
+    if (k === 0) return;
+    labelCss.push(labelRuleCss(rs, ".lb" + i + "r" + k));
+  });
 });
 if ((labelCss.length || labelFallback.length) &&
     typeof document.head !== "undefined" && document.head) {
@@ -1944,11 +1953,28 @@ function updateLabels() {
         shown++;
         if (!l._tt) {
           const angle = s.angled ? props._a : null;
+          // stilul definit prin date, evaluat la export pentru această entitate
+          const over = props._ls;
+          let inline = angle ? "transform:rotate(" + angle + "deg);" : "";
+          if (over) {
+            if (over.color) inline += "color:" + over.color + ";";
+            if (over.size) inline += "font-size:" + over.size + "px;";
+            if (over.halo) {
+              const r = Math.max(0.5, Math.min(2.5, over.haloW || s.haloW || 1));
+              const ring = [];
+              for (let a = 0; a < 12; a++) {
+                const t = a * Math.PI / 6;
+                ring.push((Math.cos(t) * r).toFixed(2) + "px " +
+                          (Math.sin(t) * r).toFixed(2) + "px 0 " + over.halo);
+              }
+              inline += "text-shadow:" + ring.join(",") + ";";
+            }
+          }
           const inner = '<span class="lbtxt"' +
-            (angle ? ' style="transform:rotate(' + angle + 'deg)"' : "") + ">" +
-            esc(text) + "</span>";
+            (inline ? ' style="' + inline + '"' : "") + ">" + esc(text) + "</span>";
+          const ruleClass = props._lk ? " lb" + i + "r" + props._lk : "";
           l._tt = L.tooltip({ permanent: true, direction: "center", opacity: 1,
-            interactive: false, className: "maplabel lb" + i })
+            interactive: false, className: "maplabel lb" + i + ruleClass })
             .setLatLng(at).setContent(inner);
           l._at = at;
         }
