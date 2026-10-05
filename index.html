@@ -166,6 +166,41 @@ select.tool{font:500 11.5px/1 var(--ui);border:1px solid var(--line);border-radi
   background:var(--ink);color:#fff;border-radius:3px;box-shadow:var(--shadow);
   padding:8px 14px;font-family:var(--mono);font-size:11.5px;display:none;letter-spacing:.04em}
 #meas.on{display:block}
+#drawhint{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;z-index:1000;
+  background:var(--ink);color:#fff;border-radius:3px;box-shadow:var(--shadow);
+  padding:8px 14px;font-family:var(--mono);font-size:11.5px;display:none;letter-spacing:.04em}
+#drawhint.on{display:block}
+#drawhint b{color:#e8a08c;font-weight:500}
+
+#drawpanel{position:absolute;right:12px;top:12px;z-index:1000;width:250px;
+  max-height:calc(100% - 24px);display:none;flex-direction:column;background:var(--panel);
+  border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);overflow:hidden}
+#drawpanel.on{display:flex}
+.leaflet-top.leaflet-right{right:52px}
+#drawhead{display:flex;align-items:center;gap:8px;padding:9px 12px;
+  border-bottom:1px solid var(--line)}
+#drawhead h2{margin:0;font-size:11px;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted)}
+#drawhead .n{flex:1;font-family:var(--mono);font-size:10px;color:var(--muted)}
+#drawhead button{border:1px solid var(--line);background:#fff;border-radius:2px;
+  cursor:pointer;width:20px;height:20px;padding:0;line-height:1}
+#drawlist{overflow-y:auto;flex:1;max-height:260px}
+.drawrow{padding:7px 12px;border-bottom:1px solid #f1f4f7;cursor:pointer;
+  display:flex;gap:8px;align-items:baseline}
+.drawrow:hover{background:#f1f4f7}
+.drawrow .dk{font-family:var(--mono);font-size:9px;color:#b4472f;text-transform:uppercase;
+  letter-spacing:.06em;flex:0 0 auto}
+.drawrow .dn{flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drawrow .dm{font-family:var(--mono);font-size:9.5px;color:var(--muted);flex:0 0 auto}
+#drawtools{display:flex;gap:5px;padding:8px 10px;border-top:1px solid var(--line);
+  flex-wrap:wrap}
+#drawtools button{font:500 10.5px var(--ui);border:1px solid var(--line);background:#fff;
+  border-radius:2px;padding:5px 8px;cursor:pointer}
+#drawtools button:hover{border-color:var(--accent);color:var(--accent)}
+#drawtools #drawclear:hover{border-color:#b4472f;color:#b4472f}
+.drawact{display:flex;gap:6px;padding:9px 14px;border-top:1px solid var(--line)}
+.drawact button{font:500 11px var(--ui);border:1px solid var(--line);background:#fff;
+  border-radius:2px;padding:5px 9px;cursor:pointer}
 #meas b{color:#9fc7e4;font-weight:500}
 .measure-cursor,.measure-cursor .leaflet-interactive{cursor:crosshair!important}
 
@@ -251,6 +286,7 @@ select.tool{font:500 11.5px/1 var(--ui);border:1px solid var(--line);border-radi
   #status{left:12px;right:12px;bottom:12px;justify-content:space-between;font-size:10.5px;gap:8px}
   #mini{display:none}
   #tbar{top:auto;bottom:52px;right:12px}
+  #drawpanel{left:12px;right:12px;top:auto;bottom:52px;width:auto;max-height:45%}
   #table{height:60%}
   #info{left:12px;right:12px;top:auto;bottom:52px;width:auto;max-height:45%}
 }
@@ -334,6 +370,20 @@ select.tool{font:500 11.5px/1 var(--ui);border:1px solid var(--line);border-radi
 <div id="tbar"></div>
 <div id="mini" class="hidden"></div>
 <div id="meas"></div>
+<div id="drawhint"></div>
+<aside id="drawpanel">
+  <div id="drawhead">
+    <h2>Desen</h2><span class="n" id="drawcount"></span>
+    <button id="drawhide" title="Ascunde panoul">×</button>
+  </div>
+  <div id="drawlist"></div>
+  <div id="drawtools">
+    <button id="drawgj" title="GeoJSON în WGS84">GeoJSON</button>
+    <button id="drawst" title="GeoJSON în Stereo 70">Stereo 70</button>
+    <button id="drawcsv" title="Vârfuri în Stereo 70, pentru tabel">CSV</button>
+    <button id="drawclear" title="Șterge tot">Șterge</button>
+  </div>
+</aside>
 <aside id="info">
   <div id="ihead" title="Trage pentru a muta fereastra, dublu-clic pentru poziția inițială">
     <h2>Informații</h2><button id="iclose">Închide</button></div>
@@ -418,7 +468,7 @@ select.tool{font:500 11.5px/1 var(--ui);border:1px solid var(--line);border-radi
 <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.2/proj4.js"></script>
 
 <script>
-const CFG = {"title": "Harta_Transgaz", "subtitle": "", "bounds": [[44.687289979548694, 25.446680673111924], [45.525408456200076, 26.6287057160876]], "initialBounds": [[44.77587757887037, 26.017333961401143], [45.08029785024501, 26.624116014944757]], "basemap": "osm", "infoDefault": "popup", "widgets": {"measure": true, "fullscreen": true, "minimap": false, "locate": true, "search": true, "print": true}, "layers": [{"name": "Transgaz_SRM_SCV_SPC_PM", "type": "geojson", "file": "data/transgaz_srm_scv_spc_pm.geojson", "geom": "point", "visible": true, "count": 95, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "PM", "g": "point", "s": {"f": "#beb297", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, {"label": "SCV", "g": "point", "s": {"f": "#e77148", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 13.23, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, {"label": "SPC", "g": "point", "s": {"f": "#ff9e17", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, {"label": "SRM", "g": "point", "s": {"f": "#a47158", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_imprejuiri", "type": "geojson", "file": "data/transgaz_imprejuiri.geojson", "geom": "polygon", "visible": true, "count": 127, "popup": true, "popupFields": ["stare", "operator", "detalii"], "km": null, "legend": [{"label": "Împrejmuiri", "g": "polygon", "s": {"f": "#4daf4a", "fo": 0.0, "s": "#4daf4a", "so": 1.0, "w": 3.63, "r": 5.0}, "img": {"src": "data/symbols/transgaz_imprejuiri_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_conducte", "type": "geojson", "file": "data/transgaz_conducte.geojson", "geom": "line", "visible": true, "count": 395, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "Conductă convenție exploatare", "g": "line", "s": {"f": "#dc10a2", "fo": 0.0, "s": "#dc10a2", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_0.png", "w": 20, "h": 20}}, {"label": "Conductă terț", "g": "line", "s": {"f": "#5f54dc", "fo": 0.0, "s": "#5f54dc", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_1.png", "w": 20, "h": 20}}, {"label": "Conductă transport", "g": "line", "s": {"f": "#232323", "fo": 0.0, "s": "#232323", "so": 1.0, "w": 4.54, "r": 5.0, "st": [{"s": "#232323", "so": 1.0, "w": 4.54, "cap": "square", "join": "bevel"}, {"s": "#ffff0f", "so": 1.0, "w": 3.02, "cap": "square", "join": "bevel"}], "cap": "square", "join": "bevel", "ml": true}, "img": {"src": "data/symbols/transgaz_conducte_2.png", "w": 20, "h": 20}}, {"label": "Racord", "g": "line", "s": {"f": "#af5800", "fo": 0.0, "s": "#af5800", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_4.png", "w": 20, "h": 20}}, {"label": "Tehnologic", "g": "line", "s": {"f": "#ffc84f", "fo": 0.0, "s": "#ffc84f", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_6.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limita_judet", "type": "geojson", "file": "data/limita_judet.geojson", "geom": "polygon", "visible": true, "count": 1, "popup": true, "popupFields": ["fid", "area", "perimeter"], "km": null, "legend": [{"label": "limita Judet", "g": "polygon", "s": {"f": "#3579b1", "fo": 0.0, "s": "#3579b1", "so": 1.0, "w": 7.56, "r": 5.0, "st": [{"s": "#3579b1", "so": 1.0, "w": 7.56, "cap": "square", "join": "bevel"}, {"s": "#b5b4b4", "so": 1.0, "w": 3.78, "d": "18.9,7.6", "cap": "square", "join": "bevel"}]}, "img": {"src": "data/symbols/limita_judet_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limite_UAT", "type": "geojson", "file": "data/limite_uat.geojson", "geom": "polygon", "visible": true, "count": 104, "popup": true, "popupFields": ["NAME", "gaze"], "km": null, "legend": [{"label": "limite UAT", "g": "polygon", "s": {"f": "#ffffff", "fo": 0.0, "s": "#ffffff", "so": 1.0, "w": 4.54, "r": 5.0, "st": [{"s": "#ffffff", "so": 1.0, "w": 4.54, "cap": "square", "join": "bevel"}, {"s": "#adadad", "so": 1.0, "w": 3.78, "d": "6,4", "cap": "square", "join": "bevel"}]}, "img": {"src": "data/symbols/limite_uat_1.png", "w": 20, "h": 20}}], "noLegend": false, "labels": {"size": 13.3, "color": "#cfca00", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8, "rules": [{"size": 13.3, "color": "#cfca00", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8}, {"size": 13.3, "color": "#00afff", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8}], "max": 1500, "angled": false, "inside": true}, "cluster": false, "opacity": 1.0}, {"type": "xyz", "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", "maxZoom": 21, "name": "Google Satellite", "visible": true, "opacity": 1.0}, {"type": "xyz", "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "maxZoom": 21, "minZoom": 0, "name": "OSM Standard", "visible": true, "opacity": 1.0}]};
+const CFG = {"title": "Harta_Transgaz", "subtitle": "", "bounds": [[44.687289979548694, 25.446680673111924], [45.525408456200076, 26.6287057160876]], "initialBounds": [[44.77587757887037, 26.017333961401143], [45.08029785024501, 26.624116014944757]], "basemap": "osm", "infoDefault": "popup", "widgets": {"measure": true, "fullscreen": true, "minimap": false, "locate": true, "search": true, "print": true, "draw": true}, "layers": [{"name": "Transgaz_SRM_SCV_SPC_PM", "type": "geojson", "file": "data/transgaz_srm_scv_spc_pm.geojson", "geom": "point", "visible": true, "count": 95, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "PM", "g": "point", "s": {"f": "#beb297", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_0.png", "w": 24, "h": 24}}, {"label": "SCV", "g": "point", "s": {"f": "#e77148", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 13.23, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_1.png", "w": 32, "h": 32}}, {"label": "SPC", "g": "point", "s": {"f": "#ff9e17", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_2.png", "w": 24, "h": 24}}, {"label": "SRM", "g": "point", "s": {"f": "#a47158", "fo": 1.0, "s": "#232323", "so": 1.0, "w": 0.0, "r": 9.45, "ic": true, "icon": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}, "img": {"src": "data/symbols/transgaz_srm_scv_spc_pm_4.png", "w": 24, "h": 24}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_imprejuiri", "type": "geojson", "file": "data/transgaz_imprejuiri.geojson", "geom": "polygon", "visible": true, "count": 127, "popup": true, "popupFields": ["stare", "operator", "detalii"], "km": null, "legend": [{"label": "Împrejmuiri", "g": "polygon", "s": {"f": "#4daf4a", "fo": 0.0, "s": "#4daf4a", "so": 1.0, "w": 3.63, "r": 5.0}, "img": {"src": "data/symbols/transgaz_imprejuiri_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "Transgaz_conducte", "type": "geojson", "file": "data/transgaz_conducte.geojson", "geom": "line", "visible": true, "count": 395, "popup": true, "popupFields": ["tip_retea", "stare", "operator", "adancime", "detalii"], "km": null, "legend": [{"label": "Conductă convenție exploatare", "g": "line", "s": {"f": "#dc10a2", "fo": 0.0, "s": "#dc10a2", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_0.png", "w": 20, "h": 20}}, {"label": "Conductă terț", "g": "line", "s": {"f": "#5f54dc", "fo": 0.0, "s": "#5f54dc", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_1.png", "w": 20, "h": 20}}, {"label": "Conductă transport", "g": "line", "s": {"f": "#232323", "fo": 0.0, "s": "#232323", "so": 1.0, "w": 4.54, "r": 5.0, "st": [{"s": "#232323", "so": 1.0, "w": 4.54, "cap": "square", "join": "bevel"}, {"s": "#ffff0f", "so": 1.0, "w": 3.02, "cap": "square", "join": "bevel"}], "cap": "square", "join": "bevel", "ml": true}, "img": {"src": "data/symbols/transgaz_conducte_2.png", "w": 20, "h": 20}}, {"label": "Racord", "g": "line", "s": {"f": "#af5800", "fo": 0.0, "s": "#af5800", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_4.png", "w": 20, "h": 20}}, {"label": "Tehnologic", "g": "line", "s": {"f": "#ffc84f", "fo": 0.0, "s": "#ffc84f", "so": 1.0, "w": 3.78, "r": 5.0, "cap": "square", "join": "bevel"}, "img": {"src": "data/symbols/transgaz_conducte_6.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limita_judet", "type": "geojson", "file": "data/limita_judet.geojson", "geom": "polygon", "visible": true, "count": 1, "popup": true, "popupFields": ["fid", "area", "perimeter"], "km": null, "legend": [{"label": "limita Judet", "g": "polygon", "s": {"f": "#3579b1", "fo": 0.0, "s": "#3579b1", "so": 1.0, "w": 7.56, "r": 5.0, "st": [{"s": "#3579b1", "so": 1.0, "w": 7.56, "cap": "square", "join": "bevel"}, {"s": "#b5b4b4", "so": 1.0, "w": 3.78, "d": "18.9,7.6", "cap": "square", "join": "bevel"}]}, "img": {"src": "data/symbols/limita_judet_0.png", "w": 20, "h": 20}}], "noLegend": false, "labels": null, "cluster": false, "opacity": 1.0}, {"name": "limite_UAT", "type": "geojson", "file": "data/limite_uat.geojson", "geom": "polygon", "visible": true, "count": 104, "popup": true, "popupFields": ["NAME", "gaze"], "km": null, "legend": [{"label": "limite UAT", "g": "polygon", "s": {"f": "#ffffff", "fo": 0.0, "s": "#ffffff", "so": 1.0, "w": 4.54, "r": 5.0, "st": [{"s": "#ffffff", "so": 1.0, "w": 4.54, "cap": "square", "join": "bevel"}, {"s": "#adadad", "so": 1.0, "w": 3.78, "d": "6,4", "cap": "square", "join": "bevel"}]}, "img": {"src": "data/symbols/limite_uat_1.png", "w": 20, "h": 20}}], "noLegend": false, "labels": {"size": 13.3, "color": "#cfca00", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8, "rules": [{"size": 13.3, "color": "#cfca00", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8}, {"size": 13.3, "color": "#00afff", "family": "Open Sans", "bold": true, "italic": true, "halo": "#ffffff", "haloW": 3.8}], "max": 1500, "angled": false, "inside": true}, "cluster": false, "opacity": 1.0}, {"type": "xyz", "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", "maxZoom": 21, "name": "Google Satellite", "visible": true, "opacity": 1.0}, {"type": "xyz", "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "maxZoom": 21, "minZoom": 0, "name": "OSM Standard", "visible": true, "opacity": 1.0}]};
 
 proj4.defs("EPSG:3844",
   "+proj=sterea +lat_0=46 +lon_0=25 +k=0.99975 +x_0=500000 +y_0=500000 +ellps=krass " +
@@ -1408,9 +1458,10 @@ function showInfo(hits, latlng) {
   }
 }
 let MEASURING = false;   // cât timp se măsoară, clicul nu interoghează straturile
+let drawMode = null;     // la fel cât timp se desenează
 
 map.on("click", ev => {
-  if (MEASURING) return;
+  if (MEASURING || drawMode) return;
   const pt = map.mouseEventToLayerPoint(ev.originalEvent);
   const hits = [];
   entries.forEach(e => {
@@ -2033,6 +2084,9 @@ const ICONS = {
   measure: '<svg viewBox="0 0 24 24"><path d="M3 15.5 15.5 3 21 8.5 8.5 21z"/><path d="M7.5 11 9 12.5M10.5 8 12 9.5M13.5 5 15 6.5"/></svg>',
   mini: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1"/><rect x="12" y="12" width="7" height="7"/></svg>',
   swipe: '<svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M8 8 4 12l4 4M16 8l4 4-4 4"/></svg>',
+  point: '<svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>',
+  polyline: '<svg viewBox="0 0 24 24"><path d="m4 18 6-8 4 4 6-9"/><circle cx="4" cy="18" r="1.8"/><circle cx="10" cy="10" r="1.8"/><circle cx="14" cy="14" r="1.8"/><circle cx="20" cy="5" r="1.8"/></svg>',
+  polygon: '<svg viewBox="0 0 24 24"><path d="M5 8 12 4l7 5-2.5 9h-9z"/><circle cx="5" cy="8" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="19" cy="9" r="1.6"/><circle cx="16.5" cy="18" r="1.6"/><circle cx="7.5" cy="18" r="1.6"/></svg>',
   layers: '<svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg>',
   print: '<svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="7" rx="1"/><path d="M6 16h12v5H6z"/></svg>'
 };
@@ -3432,6 +3486,348 @@ document.addEventListener("keydown", ev => {
   if ((ev.ctrlKey || ev.metaKey) && ev.key === "p") { ev.preventDefault(); openPrint(); }
 });
 if (W.print) toolButton("print", "Tipărește harta cu legendă", openPrint);
+
+
+/* vectorizare: desenare în browser ---------------------------------------- */
+// Pagina e statică, deci geometriile trăiesc în browserul celui care desenează:
+// se păstrează local și se exportă ca fișier, nu se trimit nicăieri.
+
+const DRAW_KEY = "ghpages.draw." + (location.pathname || "/");
+let drawPts = [];             // vârfurile figurii în lucru
+let drawTemp = null, drawVerts = [];
+let drawn = [];               // {id, type, latlngs, props, layer}
+let drawSeq = 1;
+
+const drawGroup = L.featureGroup().addTo(map);
+
+function drawStyle(kind) {
+  return kind === "polygon"
+    ? { color: "#b4472f", weight: 2, fillColor: "#b4472f", fillOpacity: 0.12 }
+    : { color: "#b4472f", weight: 2.5 };
+}
+
+function st70Of(ll) {
+  try {
+    const c = proj4("EPSG:4326", "EPSG:3844", [ll.lng, ll.lat]);
+    return { x: c[1], y: c[0] };     // X = nord, Y = est
+  } catch (err) { return null; }
+}
+
+function ringArea(latlngs) {
+  const pts = latlngs.map(ll => {
+    const c = st70Of(ll);
+    return c ? [c.y, c.x] : null;
+  });
+  if (pts.some(p => !p) || pts.length < 3) return 0;
+  let sum = 0;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    sum += (pts[j][0] + pts[i][0]) * (pts[j][1] - pts[i][1]);
+  }
+  return Math.abs(sum / 2);
+}
+
+function lineLength(latlngs) {
+  let total = 0;
+  for (let i = 1; i < latlngs.length; i++) {
+    const a = st70Of(latlngs[i - 1]), b = st70Of(latlngs[i]);
+    if (a && b) total += Math.hypot(b.x - a.x, b.y - a.y);
+  }
+  return total;
+}
+
+function fmtArea(m2) {
+  if (m2 < 10000) return m2.toFixed(1) + " m²";
+  if (m2 < 1000000) return (m2 / 10000).toFixed(4) + " ha";
+  return (m2 / 1000000).toFixed(4) + " km²";
+}
+function fmtLen(m) {
+  return m < 1000 ? m.toFixed(1) + " m" : (m / 1000).toFixed(3) + " km";
+}
+
+function measureOf(item) {
+  if (item.type === "polygon") {
+    return fmtArea(ringArea(item.latlngs)) + " · perimetru " +
+      fmtLen(lineLength(item.latlngs.concat([item.latlngs[0]])));
+  }
+  if (item.type === "line") return fmtLen(lineLength(item.latlngs));
+  const c = st70Of(item.latlngs[0]);
+  return c ? "X " + c.x.toFixed(2) + "  Y " + c.y.toFixed(2) : "";
+}
+
+function makeLayer(item) {
+  const ll = item.latlngs;
+  if (item.type === "point") {
+    return L.circleMarker(ll[0], { radius: 6, color: "#b4472f", weight: 2,
+      fillColor: "#fff", fillOpacity: 1 });
+  }
+  if (item.type === "line") return L.polyline(ll, drawStyle("line"));
+  return L.polygon(ll, drawStyle("polygon"));
+}
+
+function addDrawn(item) {
+  item.layer = makeLayer(item);
+  item.layer.addTo(drawGroup);
+  item.layer.on("click", ev => {
+    L.DomEvent.stop(ev);
+    if (drawMode) return;
+    openDrawPopup(item, ev.latlng);
+  });
+  drawn.push(item);
+  renderDrawList();
+  saveDrawn();
+}
+
+function openDrawPopup(item, latlng) {
+  const html = '<div class="pop"><h2>' + esc(item.props.name || "Element desenat") +
+    "</h2>" + '<div class="kmbox"><span class="kmv">' + esc(measureOf(item)) +
+    '</span><span class="kmn">element desenat local</span></div>' +
+    '<table><tr><td class="k">Denumire</td><td class="v">' +
+    esc(item.props.name || "—") + "</td></tr>" +
+    '<tr><td class="k">Observații</td><td class="v">' +
+    esc(item.props.note || "—") + "</td></tr></table>" +
+    '<div class="drawact"><button data-draw-edit="' + item.id + '">Redenumește</button>' +
+    '<button data-draw-del="' + item.id + '">Șterge</button></div></div>';
+  idPopup.setLatLng(latlng || item.layer.getBounds ? item.layer.getBounds().getCenter()
+                             : item.latlngs[0]).setContent(html).openOn(map);
+}
+
+document.addEventListener("click", ev => {
+  const edit = ev.target && ev.target.dataset && ev.target.dataset.drawEdit;
+  const del = ev.target && ev.target.dataset && ev.target.dataset.drawDel;
+  if (edit) {
+    const item = drawn.find(d => String(d.id) === edit);
+    if (!item) return;
+    const name = prompt("Denumire:", item.props.name || "");
+    if (name === null) return;
+    const note = prompt("Observații:", item.props.note || "");
+    item.props.name = name;
+    item.props.note = note === null ? item.props.note : note;
+    renderDrawList();
+    saveDrawn();
+    map.closePopup();
+  } else if (del) {
+    const index = drawn.findIndex(d => String(d.id) === del);
+    if (index < 0) return;
+    drawGroup.removeLayer(drawn[index].layer);
+    drawn.splice(index, 1);
+    renderDrawList();
+    saveDrawn();
+    map.closePopup();
+  }
+});
+
+/* desenarea propriu-zisă */
+function resetTemp() {
+  if (drawTemp) map.removeLayer(drawTemp);
+  drawVerts.forEach(v => map.removeLayer(v));
+  drawTemp = null;
+  drawVerts = [];
+  drawPts = [];
+}
+
+function refreshTemp() {
+  if (drawTemp) map.removeLayer(drawTemp);
+  drawTemp = null;
+  if (drawPts.length < 2) return;
+  drawTemp = drawMode === "polygon"
+    ? L.polygon(drawPts, Object.assign(drawStyle("polygon"), { dashArray: "5,4" }))
+    : L.polyline(drawPts, Object.assign(drawStyle("line"), { dashArray: "5,4" }));
+  drawTemp.addTo(map);
+}
+
+function finishShape() {
+  if (!drawMode) return;
+  const need = drawMode === "polygon" ? 3 : 2;
+  if (drawMode !== "point" && drawPts.length < need) { resetTemp(); return; }
+  addDrawn({ id: drawSeq++, type: drawMode,
+             latlngs: drawPts.map(p => ({ lat: p.lat, lng: p.lng })),
+             props: { name: "", note: "" } });
+  resetTemp();
+}
+
+function setDrawMode(mode, btn) {
+  document.querySelectorAll("#tbar button.drawbtn").forEach(b => b.classList.remove("on"));
+  resetTemp();
+  drawMode = drawMode === mode ? null : mode;
+  if (drawMode && btn) btn.classList.add("on");
+  const el = document.getElementById("map");
+  if (drawMode) el.classList.add("measure-cursor"); else el.classList.remove("measure-cursor");
+  const hint = document.getElementById("drawhint");
+  hint.classList.toggle("on", !!drawMode);
+  hint.innerHTML = drawMode === "point"
+    ? "<b>Punct:</b> clic pentru a adăuga, Esc pentru a opri"
+    : (drawMode ? "<b>" + (drawMode === "line" ? "Linie" : "Poligon") +
+        ":</b> clic pentru vârfuri, dublu-clic pentru final, Esc anulează" : "");
+  if (drawMode) map.doubleClickZoom.disable(); else map.doubleClickZoom.enable();
+}
+
+map.on("click", ev => {
+  if (!drawMode) return;
+  if (drawMode === "point") {
+    addDrawn({ id: drawSeq++, type: "point",
+               latlngs: [{ lat: ev.latlng.lat, lng: ev.latlng.lng }],
+               props: { name: "", note: "" } });
+    return;
+  }
+  drawPts.push(ev.latlng);
+  const v = L.circleMarker(ev.latlng, { radius: 3.5, color: "#b4472f", weight: 2,
+    fillColor: "#fff", fillOpacity: 1 }).addTo(map);
+  drawVerts.push(v);
+  refreshTemp();
+});
+
+map.on("dblclick", () => { if (drawMode && drawMode !== "point") finishShape(); });
+document.addEventListener("keydown", ev => {
+  if (ev.key === "Escape" && drawMode) setDrawMode(null);
+  if (ev.key === "Enter" && drawMode && drawMode !== "point") finishShape();
+});
+
+/* panoul elementelor desenate și exportul ------------------------------- */
+function saveDrawn() {
+  try {
+    const data = drawn.map(d => ({ id: d.id, type: d.type, latlngs: d.latlngs,
+                                   props: d.props }));
+    localStorage.setItem(DRAW_KEY, JSON.stringify({ seq: drawSeq, items: data }));
+  } catch (err) { /* stocarea poate fi plină sau blocată */ }
+}
+
+function loadDrawn() {
+  let saved = null;
+  try {
+    saved = JSON.parse(localStorage.getItem(DRAW_KEY) || "null");
+  } catch (err) { saved = null; }
+  if (!saved || !saved.items) return;
+  drawSeq = saved.seq || 1;
+  saved.items.forEach(item => addDrawn({ id: item.id, type: item.type,
+    latlngs: item.latlngs, props: item.props || { name: "", note: "" } }));
+}
+
+function renderDrawList() {
+  const box = document.getElementById("drawlist");
+  const panel = document.getElementById("drawpanel");
+  if (!box) return;
+  panel.classList.toggle("on", drawn.length > 0);
+  document.getElementById("drawcount").textContent =
+    drawn.length + (drawn.length === 1 ? " element" : " elemente");
+  box.innerHTML = drawn.map(d =>
+    '<div class="drawrow" data-draw-zoom="' + d.id + '">' +
+    '<span class="dk">' + (d.type === "point" ? "pct" :
+      (d.type === "line" ? "lin" : "pol")) + "</span>" +
+    '<span class="dn">' + esc(d.props.name || "(fără denumire)") + "</span>" +
+    '<span class="dm">' + esc(measureOf(d)) + "</span></div>").join("");
+}
+
+document.addEventListener("click", ev => {
+  const row = ev.target && ev.target.closest ? ev.target.closest("[data-draw-zoom]") : null;
+  if (!row) return;
+  const item = drawn.find(d => String(d.id) === row.dataset.drawZoom);
+  if (!item) return;
+  try {
+    if (item.type === "point") map.setView(item.latlngs[0], Math.max(map.getZoom(), 17));
+    else map.fitBounds(item.layer.getBounds(), { padding: [40, 40] });
+  } catch (err) { /* ignoră */ }
+  openDrawPopup(item, null);
+});
+
+function drawnGeoJson(st70) {
+  const features = drawn.map(d => {
+    const coord = ll => {
+      if (!st70) return [+ll.lng.toFixed(7), +ll.lat.toFixed(7)];
+      const c = st70Of(ll);
+      return c ? [+c.y.toFixed(3), +c.x.toFixed(3)] : [ll.lng, ll.lat];
+    };
+    let geometry;
+    if (d.type === "point") {
+      geometry = { type: "Point", coordinates: coord(d.latlngs[0]) };
+    } else if (d.type === "line") {
+      geometry = { type: "LineString", coordinates: d.latlngs.map(coord) };
+    } else {
+      const ring = d.latlngs.map(coord);
+      ring.push(ring[0]);
+      geometry = { type: "Polygon", coordinates: [ring] };
+    }
+    const props = { nume: d.props.name || "", observatii: d.props.note || "" };
+    if (d.type === "polygon") {
+      props.suprafata_mp = +ringArea(d.latlngs).toFixed(2);
+      props.perimetru_m = +lineLength(d.latlngs.concat([d.latlngs[0]])).toFixed(2);
+    } else if (d.type === "line") {
+      props.lungime_m = +lineLength(d.latlngs).toFixed(2);
+    } else {
+      const c = st70Of(d.latlngs[0]);
+      if (c) { props.X_st70 = +c.x.toFixed(3); props.Y_st70 = +c.y.toFixed(3); }
+    }
+    return { type: "Feature", properties: props, geometry: geometry };
+  });
+  const out = { type: "FeatureCollection", features: features };
+  if (st70) {
+    out.crs = { type: "name",
+                properties: { name: "urn:ogc:def:crs:EPSG::3844" } };
+  }
+  return out;
+}
+
+function downloadText(name, text, mime) {
+  const url = URL.createObjectURL(new Blob([text], { type: mime }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+function baseName() {
+  return (CFG.title || "desen").replace(/[^\w\-]+/g, "_");
+}
+
+function exportDrawn(kind) {
+  if (!drawn.length) { alert("Nu ați desenat încă nimic."); return; }
+  if (kind === "wgs") {
+    downloadText(baseName() + "_desen_wgs84.geojson",
+      JSON.stringify(drawnGeoJson(false), null, 1), "application/geo+json");
+  } else if (kind === "st70") {
+    downloadText(baseName() + "_desen_stereo70.geojson",
+      JSON.stringify(drawnGeoJson(true), null, 1), "application/geo+json");
+  } else {
+    // puncte și vârfuri, în Stereo 70, pentru ridicări și import tabelar
+    const rows = ['"element","nr","denumire","X","Y"'];
+    drawn.forEach((d, index) => {
+      d.latlngs.forEach((ll, k) => {
+        const c = st70Of(ll);
+        if (!c) return;
+        rows.push('"' + (d.type) + '",' + (index + 1) + ',"' +
+          String(d.props.name || "").replace(/"/g, '""') + '",' +
+          c.x.toFixed(3) + "," + c.y.toFixed(3));
+      });
+    });
+    downloadText(baseName() + "_puncte_stereo70.csv", "\ufeff" + rows.join("\r\n"),
+                 "text/csv;charset=utf-8");
+  }
+}
+
+document.getElementById("drawclear").addEventListener("click", () => {
+  if (!drawn.length) return;
+  if (!confirm("Ștergeți toate elementele desenate?")) return;
+  drawn.forEach(d => drawGroup.removeLayer(d.layer));
+  drawn = [];
+  renderDrawList();
+  saveDrawn();
+});
+document.getElementById("drawgj").addEventListener("click", () => exportDrawn("wgs"));
+document.getElementById("drawst").addEventListener("click", () => exportDrawn("st70"));
+document.getElementById("drawcsv").addEventListener("click", () => exportDrawn("csv"));
+document.getElementById("drawhide").addEventListener("click", () => {
+  document.getElementById("drawpanel").classList.remove("on");
+});
+
+if (W.draw) {
+  toolButton("point", "Desenează punct", b => setDrawMode("point", b)).classList
+    .add("drawbtn");
+  toolButton("polyline", "Desenează linie", b => setDrawMode("line", b)).classList
+    .add("drawbtn");
+  toolButton("polygon", "Desenează poligon", b => setDrawMode("polygon", b)).classList
+    .add("drawbtn");
+  loadDrawn();
+}
 
 /* panoul de straturi ----------------------------------------------------- */
 const panelBox = document.getElementById("panel");
